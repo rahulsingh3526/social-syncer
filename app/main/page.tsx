@@ -11,7 +11,7 @@ const page = () => {
           </p>
           <p>images</p>
 
-          <p>name</p>
+          <p className="font-bold">name</p>
           <div>post</div>
           <div>follower</div>
           <div>following </div>
