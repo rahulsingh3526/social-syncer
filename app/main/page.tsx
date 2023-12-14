@@ -1,15 +1,92 @@
 "use client";
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { InputForm } from "../inputform/page";
 
 const page = () => {
   return (
     <>
-      <div className="flex justify-center items-center w-full h-full bg-yellow-400 min-h-screen">
-        <div className="w-2/3 md:w-1/3 flex flex-col justify-center items-center bg-white border-2 border-red-500 p-8 rounded-md">
-          <p className="relative top-4 py-2 w-full h-24 rounded-lg bg-gradient-to-br from-green-300 via-blue-500 to-purple-600">
-            banner
-          </p>
+      <div className="flex flex-col justify-center items-center w-full h-full bg-yellow-400 min-h-screen">
+        <div>
+          {" "}
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="outline">{"Edit profile"}</Button>
+            </SheetTrigger>
+            <SheetContent side={"right"}>
+              <SheetHeader>
+                <SheetTitle>Edit profile</SheetTitle>
+                <SheetDescription>
+                  Make changes to your profile here. Click save when you're
+                  done.
+                </SheetDescription>
+              </SheetHeader>
+              <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="name" className="text-right">
+                    Name
+                  </Label>
+                  <Input
+                    id="name"
+                    value="Pedro Duarte"
+                    className="col-span-3"
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="username" className="text-right">
+                    Username
+                  </Label>
+                  <Input
+                    id="username"
+                    value="@peduarte"
+                    className="col-span-3"
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="username" className="text-right">
+                    Username
+                  </Label>
+                  <Input
+                    id="username"
+                    value="@peduarte"
+                    className="col-span-3"
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="username" className="text-right">
+                    Username
+                  </Label>
+                  <Input
+                    id="username"
+                    value="@peduarte"
+                    className="col-span-3"
+                  />
+                </div>
+              </div>
+              <SheetFooter>
+                <SheetClose asChild>
+                  <Button type="submit">Save changes</Button>
+                </SheetClose>
+              </SheetFooter>
+            </SheetContent>
+          </Sheet>
+        </div>
+
+        <div className="w-2/3 md:w-2/5 flex flex-col justify-center items-center bg-white border-2 border-red-500 p-6 rounded-3xl">
+          <p className="relative top-4 py-2 w-full h-32 rounded-xl bg-gradient-to-br from-green-300 via-blue-500 to-purple-600"></p>
           <div className=" rounded-full p-1 bg-white z-10">
             {" "}
             <Avatar>

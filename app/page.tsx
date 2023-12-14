@@ -42,7 +42,7 @@ export default function Hero() {
         </h2>
 
         <div className="w-1/4 text-center border-purple-800 border-2 rounded-lg font-medium text-white px-4 py-2 mt-4 text-sm md:text-lg lg:text-xl transition-all duration-300 ease-in-out hover:bg-purple-800 focus:outline-none focus:ring focus:border-purple-900">
-          <Link href="/main">
+          <Link href="/inputform">
             <p>Explore</p>
           </Link>
         </div>
