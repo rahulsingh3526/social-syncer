@@ -59,13 +59,19 @@ export default function InputForm() {
   }
 
   return (
-    <div className="flex justify-center items-center ">
+    <div
+      className="flex justify-center items-center flex flex-col justify-center items-center w-full h-full min-h-screen bg-cover bg-center  align-center "
+      style={{
+        backgroundImage: 'url("/2d-graphic.jpg")',
+        backgroundRepeat: "no-repeat",
+      }}
+    >
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="w-2/3 md:w-1/3 space-y-6 flex flex-col justify-center rounded-3xl items-center min-h-screen border-2 border-red-500"
         >
-          <p className="text-2xl text-red-500">Add user</p>
+          <p className="text-2xl ">Add user</p>
           <FormField
             control={form.control}
             name="userid"

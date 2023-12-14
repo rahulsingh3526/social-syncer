@@ -14,12 +14,22 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { InputForm } from "../inputform/page";
+import Navbar from "../navbar";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const router = useRouter();
   return (
     <>
-      <div className="flex flex-col justify-center items-center w-full h-full bg-yellow-400 min-h-screen">
+      {" "}
+      <Navbar />
+      <div
+        className="flex flex-col justify-center items-center w-full h-full min-h-screen bg-cover bg-center  align-center gap-4"
+        style={{
+          backgroundImage: 'url("/2d-graphic.jpg")',
+          backgroundRepeat: "no-repeat",
+        }}
+      >
         <div>
           {" "}
           <Sheet>
