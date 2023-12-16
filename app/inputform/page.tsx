@@ -54,7 +54,7 @@ export default function InputForm() {
         </div>
       ),
     });
-    router.push("/main");
+    router.push("/edit-profile");
     console.log(data);
   }
 
