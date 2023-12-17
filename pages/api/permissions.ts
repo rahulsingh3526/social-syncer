@@ -7,9 +7,10 @@ export default async function handler(
 ) {
   if (req.method !== "GET")
     return res.status(405).json({ message: "Method not allowed" });
-  const user = auth.currentUser;
 
-  if (user) {
+  const uid = req.query.uid;
+
+  if (uid) {
     res.send({
       Permissions: ["EDIT", "DELETE", "CREATE"],
       Role: "USER",

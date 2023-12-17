@@ -1,7 +1,13 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import React from "react";
 
-const Cards = () => {
+interface UserType {
+  userId: string;
+  username: string;
+  position: string;
+}
+
+const Cards = ({ userId, username, position }: UserType) => {
   return (
     <div className="w-2/3 md:w-2/5 flex flex-col justify-center items-center bg-white border-2 border-red-500 p-6 rounded-3xl">
       <p className="relative top-4 py-2 w-full h-32 rounded-xl bg-gradient-to-br from-green-300 via-blue-500 to-purple-600"></p>

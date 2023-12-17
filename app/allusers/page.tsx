@@ -17,6 +17,7 @@ import Loading from "../loading";
 
 interface Users {
   id: string;
+  userId: string;
   name: string;
   position: string;
 }
@@ -26,7 +27,7 @@ const Allusers = () => {
     queryKey: ["allusers"],
     queryFn: async function allUsers() {
       const response = await fetch("/api/users");
-      await new Promise((resolve) => setTimeout(resolve, 4000));
+      await new Promise((resolve) => setTimeout(resolve, 3000));
       return response.json();
     },
   });
@@ -63,7 +64,7 @@ const Allusers = () => {
                           <AvatarFallback>CN</AvatarFallback>
                         </Avatar>
                       </div>
-                      <CardTitle>{person.id}</CardTitle>
+                      <CardTitle>{person?.userId}</CardTitle>
                       {/* <CardDescription>{person.id}</CardDescription> */}
                     </div>
                   </CardHeader>

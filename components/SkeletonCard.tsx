@@ -17,7 +17,7 @@ const SkeletonCard = () => {
         <CardHeader className="flex-row gap-4 ">
           <div className="flex justify-around items-center gap-20">
             <Skeleton className="w-14 h-14 rounded-full" />
-            <Skeleton className="w-32 h-4" />
+            <Skeleton className="w-32 h-6" />
           </div>
         </CardHeader>
         <CardContent>

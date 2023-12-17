@@ -9,12 +9,18 @@ import {
 import { auth, db } from "./firebaseConfig";
 import { User } from "firebase/auth";
 
-const addUserData = async (uid: string, name: string, position: string) => {
+const addUserData = async (
+  uid: string,
+  userId: string,
+  name: string,
+  position: string
+) => {
   try {
     const docsRef = doc(db, "Users", `${uid}`);
     const data = await setDoc(docsRef, {
       name: name,
       position: position,
+      userId: userId,
     });
     console.log(data);
     return data;

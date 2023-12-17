@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation";
 import { addUserData } from "@/firebase/methods";
 import { useState } from "react";
 import Navbar from "../navbar";
+import { auth } from "@/firebase/firebaseConfig";
 
 export default function InputForm() {
   const [userData, setUserData] = useState({});
@@ -56,7 +57,9 @@ export default function InputForm() {
         </div>
       ),
     });
-    addUserData(data.userid, data.username, data.position);
+    const uid = auth.currentUser?.uid;
+    if (uid === undefined) return;
+    addUserData(uid, data.userid, data.username, data.position);
     router.push("/edit-profile");
     console.log(data);
   }
@@ -72,7 +75,7 @@ export default function InputForm() {
     <>
       <Navbar />
       <div
-        className="flex flex-col justify-center items-center w-full h-full min-h-screen bg-cover bg-center  align-center "
+        className="flex flex-col justify-center items-center w-full h-full min-h-screen bg-cover bg-center  align-center py-16 "
         style={{
           backgroundImage: 'url("/2d-graphic.jpg")',
           backgroundRepeat: "no-repeat",

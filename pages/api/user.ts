@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { auth } from "../../firebase/firebaseConfig";
-import { getUserData } from "../../firebase/methods";
+import { getUser, getUserData } from "../../firebase/methods";
 
 export default async function handler(
   req: NextApiRequest,
@@ -8,13 +8,22 @@ export default async function handler(
 ) {
   if (req.method !== "GET")
     return res.status(405).json({ message: "Method not allowed" });
-  const user = auth.currentUser;
+  const uid = req.query.uid;
 
-  if (user) {
-    const userData = getUserData();
-    res.send({
-      ...userData,
-    });
+  console.log(req.query);
+
+  if (uid) {
+    if (typeof uid == "string") {
+      const userData = await getUser(uid);
+      console.log(userData);
+      res.send({
+        ...userData,
+      });
+    } else {
+      res.send({
+        error: "Incorrect arguement UID",
+      });
+    }
   } else {
     res.send({
       error:
