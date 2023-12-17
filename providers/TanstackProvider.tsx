@@ -6,6 +6,8 @@ import { AuthContext } from "../context/authContext";
 import React, { createContext } from "react";
 import { useContext, useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+
 import {
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -28,6 +30,7 @@ const TanstackProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<User | null>();
   const userInfo = useRef();
   const router = useRouter();
+  const pathname = usePathname();
   const user = auth.currentUser;
 
   const [authorized, setAuthorized] = useState(false);
@@ -60,6 +63,7 @@ const TanstackProvider = ({ children }: { children: React.ReactNode }) => {
     return await signInWithPopup(auth, googleProvider)
       .then(async (res) => {
         console.log(res);
+        router.push("/inputform");
         return res;
       })
       .catch((err) => alert(err.message));
@@ -83,32 +87,29 @@ const TanstackProvider = ({ children }: { children: React.ReactNode }) => {
     setCurrentUser(user);
   }, []);
 
-  // useEffect(() => {
-  //   const authCheck = () => {
-  //     if (
-  //       !user &&
-  //       router.asPath &&
-  //       !publicPaths.includes(router.asPath.split("?")[0])
-  //     ) {
-  //       setAuthorized(false);
-  //       void router.push("/signIn");
-  //     } else {
-  //       setAuthorized(true);
-  //     }
-  //   };
+  useEffect(() => {
+    const authCheck = () => {
+      if (!user && pathname && !publicPaths.includes(pathname)) {
+        setAuthorized(false);
+        void router.push("/signIn");
+      } else {
+        setAuthorized(true);
+      }
+    };
 
-  //   authCheck();
+    authCheck();
 
-  //   const preventAccess = () => setAuthorized(false);
+    const preventAccess = () => setAuthorized(false);
 
-  //   router.Router.events.on("routeChangeStart", preventAccess);
-  //   router.events.on("routeChangeComplete", authCheck);
+    // router.Router.events.on("routeChangeStart", preventAccess);
+    // router.events.on("routeChangeComplete", authCheck);
 
-  //   return () => {
-  //     router.events.off("routeChangeStart", preventAccess);
-  //     router.events.off("routeChangeComplete", authCheck);
-  //   };
-  // }, [router, router.events, currentUser, user]);
+    // return () => {
+    //   router.events.off("routeChangeStart", preventAccess);
+    //   router.events.off("routeChangeComplete", authCheck);
+    // };
+  }, [router, pathname, currentUser, user]);
+
   const value = {
     currentUser,
     LogIn,

@@ -9,23 +9,14 @@ import {
 import { auth, db } from "./firebaseConfig";
 import { User } from "firebase/auth";
 
-const addUserData = async (
-  uid: string,
-  name: string,
-  position: string
-  //   posts: number,
-  //   followers: number,
-  //   following: number
-) => {
+const addUserData = async (uid: string, name: string, position: string) => {
   try {
     const docsRef = doc(db, "Users", `${uid}`);
     const data = await setDoc(docsRef, {
       name: name,
       position: position,
-      posts: posts,
-      //   followers: followers,
-      //   following: following,
     });
+    console.log(data);
     return data;
   } catch (err) {
     console.log(err);
@@ -80,7 +71,7 @@ export const getAllUsers = async () => {
   const querySnapshot = await getDocs(colRef);
 
   querySnapshot.forEach((doc) => {
-    users.push(doc.data());
+    users.push({ ...doc.data(), id: doc.id });
   });
 
   return users;
