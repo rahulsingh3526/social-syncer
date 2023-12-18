@@ -34,7 +34,7 @@ export default function InputForm() {
     username: z.string().min(10, {
       message: "Username must be at least 10 characters.",
     }),
-    position: z.string().min(5, {
+    description: z.string().min(5, {
       message: "Username must be at least 5 characters.",
     }),
   });
@@ -43,7 +43,7 @@ export default function InputForm() {
     defaultValues: {
       userid: "",
       username: "",
-      position: "",
+      description: "",
       // posts: 0,
     },
   });
@@ -59,7 +59,7 @@ export default function InputForm() {
     });
     const uid = auth.currentUser?.uid;
     if (uid === undefined) return;
-    addUserData(uid, data.userid, data.username, data.position);
+    addUserData(uid, data.userid, data.username, data.description);
     router.push("/edit-profile");
     console.log(data);
   }
@@ -94,7 +94,7 @@ export default function InputForm() {
                 <FormItem>
                   <FormLabel>UserId</FormLabel>
                   <FormControl>
-                    <Input placeholder="shadcn" {...field} />
+                    <Input placeholder="userId" {...field} />
                   </FormControl>
                   <FormDescription>Your Unique userId</FormDescription>
                   <FormMessage />
@@ -108,23 +108,23 @@ export default function InputForm() {
                 <FormItem>
                   <FormLabel>UserName</FormLabel>
                   <FormControl>
-                    <Input placeholder="shadcn" {...field} />
+                    <Input placeholder="username" {...field} />
                   </FormControl>
-                  <FormDescription>Your Unique userId</FormDescription>
+                  <FormDescription>Your Unique username</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <FormField
               control={form.control}
-              name="position"
+              name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Position</FormLabel>
+                  <FormLabel>Description</FormLabel>
                   <FormControl>
                     <Input placeholder="shadcn" {...field} />
                   </FormControl>
-                  <FormDescription>Your Unique userId</FormDescription>
+                  <FormDescription>Your description</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

@@ -13,13 +13,13 @@ const addUserData = async (
   uid: string,
   userId: string,
   name: string,
-  position: string
+  description: string
 ) => {
   try {
     const docsRef = doc(db, "Users", `${uid}`);
     const data = await setDoc(docsRef, {
       name: name,
-      position: position,
+      description: description,
       userId: userId,
     });
     console.log(data);

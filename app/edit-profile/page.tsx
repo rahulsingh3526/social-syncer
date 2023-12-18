@@ -32,7 +32,7 @@ import { addUserData, getUser, getUserData } from "@/firebase/methods";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Users } from "lucide-react";
 import { auth } from "@/firebase/firebaseConfig";
 
@@ -49,7 +49,7 @@ const Edit = () => {
     username: z.string().min(10, {
       message: "Username must be at least 10 characters.",
     }),
-    position: z.string().min(5, {
+    description: z.string().min(5, {
       message: "Username must be at least 5 characters.",
     }),
   });
@@ -58,37 +58,37 @@ const Edit = () => {
     defaultValues: {
       userid: "",
       username: "",
-      position: "",
+      description: "",
       // posts: 0,
     },
+  });
+
+  const queryClient = useQueryClient();
+
+  queryClient.invalidateQueries({
+    queryKey: ["singleUserData"],
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     toast({
       title: "You submitted the following values:",
-      description: (
-        <div className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </div>
-      ),
+      description: "hello",
     });
     const uid = auth.currentUser?.uid;
     if (uid === undefined) return;
-    addUserData(uid, data.userid, data.username, data.position);
+    addUserData(uid, data.userid, data.username, data.description);
     // router.push("/edit-profile");
-    console.log(data);
-
     console.log(data);
   }
 
-  console.log(uid);
+  // console.log(uid);
 
   async function singleUsers() {
     const response = await fetch(`/api/user?uid=${uid}`);
     // await new Promise((resolve) => setTimeout(resolve, 3000));
-    // if (!response.ok) {
-    //   throw new Error("Network response was not ok");
-    // }
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
     return response.json();
   }
 
@@ -102,18 +102,18 @@ const Edit = () => {
   async function singleUsersPermission() {
     const response = await fetch(`/api/permissions?uid=${uid}`);
     // await new Promise((resolve) => setTimeout(resolve, 3000));
-    // if (!response.ok) {
-    //   throw new Error("Network response was not ok");
-    // }
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
     return response.json();
   }
 
-  const { data: _userPermissions } = useQuery({
+  const { data: _userPermissions, isLoading } = useQuery({
     queryKey: ["userPermissions"],
     queryFn: singleUsersPermission,
   });
 
-  console.log(_userPermissions);
+  console.log(_userPermissions?.Permissions?.includes("EDIT"));
 
   return (
     <>
@@ -130,8 +130,15 @@ const Edit = () => {
           {" "}
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="outline">{"Edit profile"}</Button>
+              {/* disabled whn the user is not authenticated */}
+              <Button
+                variant="outline"
+                disabled={!_userPermissions?.Permissions?.includes("EDIT")}
+              >
+                {"Edit profile"}
+              </Button>
             </SheetTrigger>
+
             <SheetContent side={"right"}>
               <SheetHeader>
                 <SheetTitle>Edit profile</SheetTitle>
@@ -153,7 +160,7 @@ const Edit = () => {
                       <FormItem>
                         <FormLabel>UserId</FormLabel>
                         <FormControl>
-                          <Input placeholder="shadcn" {...field} />
+                          <Input placeholder="userId" {...field} />
                         </FormControl>
                         <FormDescription>Your Unique userId</FormDescription>
                         <FormMessage />
@@ -167,23 +174,23 @@ const Edit = () => {
                       <FormItem>
                         <FormLabel>UserName</FormLabel>
                         <FormControl>
-                          <Input placeholder="shadcn" {...field} />
+                          <Input placeholder="username" {...field} />
                         </FormControl>
-                        <FormDescription>Your Unique userId</FormDescription>
+                        <FormDescription>Your Unique username</FormDescription>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
                   <FormField
                     control={form.control}
-                    name="position"
+                    name="description"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Position</FormLabel>
+                        <FormLabel>Description</FormLabel>
                         <FormControl>
-                          <Input placeholder="shadcn" {...field} />
+                          <Input placeholder="description" {...field} />
                         </FormControl>
-                        <FormDescription>Your Unique userId</FormDescription>
+                        <FormDescription>Your Description</FormDescription>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -202,7 +209,11 @@ const Edit = () => {
             </SheetContent>
           </Sheet>
         </div>
-        <Card />
+        <Card
+          userId={_userData?.userId}
+          username={_userData?.name}
+          description={_userData?.description}
+        />
       </div>
     </>
   );

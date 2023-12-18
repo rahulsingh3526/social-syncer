@@ -19,7 +19,7 @@ interface Users {
   id: string;
   userId: string;
   name: string;
-  position: string;
+  description: string;
 }
 
 const Allusers = () => {
@@ -54,7 +54,7 @@ const Allusers = () => {
                   className="flex flex-col justify-between w-80 hover:shadow-xl"
                 >
                   <CardHeader className="flex-row gap-4 ">
-                    <div className="flex justify-around items-center gap-20">
+                    <div className="flex justify-around items-center gap-12">
                       <div>
                         <Avatar>
                           <AvatarImage
@@ -69,10 +69,10 @@ const Allusers = () => {
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <p>{person.name}</p>
+                    <p>{person?.name}</p>
                   </CardContent>
                   <CardFooter>
-                    <p>{person.position}</p>
+                    <p>{person?.description}</p>
                   </CardFooter>
                 </Card>
               ))
