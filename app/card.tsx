@@ -7,7 +7,7 @@ interface UserType {
   description: string;
 }
 
-const Cards = ({ userId, name, description }: UserType) => {
+const CardComp = ({ userId, username, description }: UserType) => {
   return (
     <div className="w-2/3 md:w-2/5 flex flex-col justify-center items-center bg-white border-2 border-red-500 p-6 rounded-3xl">
       <p className="relative top-4 py-2 w-full h-32 rounded-xl bg-gradient-to-br from-green-300 via-blue-500 to-purple-600"></p>
@@ -23,7 +23,7 @@ const Cards = ({ userId, name, description }: UserType) => {
       </div>
 
       <p className="font-bold mt-5 text-3xl ">{userId}</p>
-      <p className="font-bold mt-5 text-3xl ">{name}</p>
+      <p className="font-bold mt-5 text-3xl ">{username}</p>
 
       <p className=" text-gray-500 text-lg mt-3">{description}</p>
       <div className=" flex flex-row space-x-5 md:space-x-16 p-4 m-4 justify-end">
@@ -40,4 +40,4 @@ const Cards = ({ userId, name, description }: UserType) => {
   );
 };
 
-export default Cards;
+export default CardComp;

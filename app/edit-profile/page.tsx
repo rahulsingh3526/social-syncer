@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Navbar from "../navbar";
 import { useRouter } from "next/navigation";
-import Card from "../Card";
+import CardComp from "../card";
 import InputForm from "../inputform/page";
 import {
   Form,
@@ -209,7 +209,7 @@ const Edit = () => {
             </SheetContent>
           </Sheet>
         </div>
-        <Card
+        <CardComp
           userId={_userData?.userId}
           username={_userData?.name}
           description={_userData?.description}
