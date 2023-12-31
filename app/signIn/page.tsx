@@ -8,8 +8,8 @@ import Input from "@/components/Input";
 const SignIn = () => {
   const { LoginWithGoogle, SignOut, LogIn, signUp } = useAuth();
   const [variant, setVariant] = useState("login");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
 
   const toggleVariant = useCallback(() => {
     setVariant((currentVariant) =>
@@ -38,7 +38,7 @@ const SignIn = () => {
 
         <div className=" px-12 pt-6 pb-4 self-center -mt-24 lg:w-2/5 lg:max-w-md rounded-md w-full">
           <div className="flex flex-col gap-4 border-4 border-red-400 rounded-lg p-8">
-            <Input
+            {/* <Input
               label="Email"
               onChange={(e: {
                 target: { value: React.SetStateAction<string> };
@@ -57,7 +57,7 @@ const SignIn = () => {
               // type={passwordVisible ? "text" : "password"}
               value={password}
               // position="absolute"
-            />
+            /> */}
 
             {/* sorry the email and the password id not working at the last moment so adding the google auth  */}
 
