@@ -4,22 +4,21 @@ import React, { useCallback, useState } from "react";
 import GoogleButton from "react-google-button";
 import Navbar from "../navbar";
 import Input from "@/components/Input";
+import { useAuthStore } from "@/store";
 
 const SignIn = () => {
-  const { LoginWithGoogle, SignOut, LogIn, signUp } = useAuth();
-  const [variant, setVariant] = useState("login");
+  const { LoginWithGoogle, SignOut } = useAuth();
+  const { isLoginButtonVisible, setLoginButtonVisibility } = useAuthStore();
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
 
-  const toggleVariant = useCallback(() => {
-    setVariant((currentVariant) =>
-      currentVariant === "login" ? "SignOut" : "login"
-    );
-  }, []);
+  const handleLoginWithGoogle = () => {
+    LoginWithGoogle();
+  };
 
-  function SignUp(email: string, password: string): void {
-    throw new Error("Function not implemented.");
-  }
+  const handleSignOut = () => {
+    SignOut();
+  };
 
   return (
     <>
@@ -36,7 +35,7 @@ const SignIn = () => {
    <div className="flex justify-end">SignOut</div>
         <button >SignOut</button> */}
 
-        <div className=" px-12 pt-6 pb-4 self-center -mt-24 lg:w-2/5 lg:max-w-md rounded-md w-full">
+        <div className=" px-12 pt-4 pb-4 self-center -mt-24 lg:w-2/5 lg:max-w-md rounded-md w-full">
           <div className="flex flex-col gap-4 border-4 border-red-400 rounded-lg p-8">
             {/* <Input
               label="Email"
@@ -60,20 +59,22 @@ const SignIn = () => {
             /> */}
 
             {/* sorry the email and the password id not working at the last moment so adding the google auth  */}
-
-            <button
-              className="bg-red-600 py-3 text-white rounded-md w-full mt-8 hover:bg-red-700 transition"
-              onClick={() => LoginWithGoogle()}
-            >
-              Login
-            </button>
-
-            <button
-              className=" bg-red-600 py-3 text-white rounded-md  hover:bg-red-700 transition"
-              onClick={SignOut}
-            >
-              SignOut
-            </button>
+            {isLoginButtonVisible && (
+              <button
+                className="bg-red-600 py-3 text-white rounded-md w-full hover:bg-red-700 transition"
+                onClick={handleLoginWithGoogle}
+              >
+                Login
+              </button>
+            )}
+            {!isLoginButtonVisible && (
+              <button
+                className=" bg-red-600 py-3 text-white rounded-md  hover:bg-red-700 transition"
+                onClick={handleSignOut}
+              >
+                SignOut
+              </button>
+            )}
           </div>
         </div>
 
