@@ -22,10 +22,12 @@ import { auth } from "../firebase/firebaseConfig";
 import { addUserData, getUserData } from "../firebase/methods";
 import { publicPaths } from "../constants/publicPaths";
 import AppRouter from "next/app";
+import { useAuthStore } from "@/store";
 
 const googleProvider = new GoogleAuthProvider();
 
 const TanstackProvider = ({ children }: { children: React.ReactNode }) => {
+  const { isLoginButtonVisible, setLoginButtonVisibility } = useAuthStore();
   const queryClient = new QueryClient();
   const [currentUser, setCurrentUser] = useState<User | null>();
   const userInfo = useRef();
@@ -63,6 +65,7 @@ const TanstackProvider = ({ children }: { children: React.ReactNode }) => {
     return await signInWithPopup(auth, googleProvider)
       .then(async (res) => {
         console.log(res);
+        setLoginButtonVisibility(false);
         router.push("/inputform");
         return res;
       })
@@ -71,7 +74,10 @@ const TanstackProvider = ({ children }: { children: React.ReactNode }) => {
 
   const SignOut = () => {
     signOut(auth)
-      .then(() => router.push("/"))
+      .then(() => {
+        router.push("/");
+        setLoginButtonVisibility(true);
+      })
       .catch((err) => alert(err.message));
   };
 

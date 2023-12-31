@@ -131,7 +131,7 @@ export default function InputForm() {
             />
 
             <Button className="w-2/3" type="submit">
-              Submit
+              Create Profile
             </Button>
           </form>
         </Form>

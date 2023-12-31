@@ -26,7 +26,7 @@ const Allusers = () => {
     queryKey: ["allusers"],
     queryFn: async function allUsers() {
       const response = await fetch("/api/users");
-      await new Promise((resolve) => setTimeout(resolve, 3000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       return response.json();
     },
   });
